@@ -1,0 +1,19 @@
+---
+- name: create mastodon group
+  become: true
+  ansible.builtin.group:
+    name: "{{ mastodon_scheduler__group }}"
+    state: present
+
+- name: create mastodon user with ssh key
+  become: true
+  ansible.builtin.user:
+    name: "{{ mastodon_scheduler__user }}"
+    state: present
+    group: "{{ mastodon_scheduler__group }}"
+    comment: 'Mastodon schedule User'
+    shell: '/bin/bash'
+    generate_ssh_key: true
+    ssh_key_file: '.ssh/id_ed25519'
+    ssh_key_type: 'ed25519'
+  register: _mastodon_scheduler__user

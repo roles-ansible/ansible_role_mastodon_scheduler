@@ -1,3 +1,7 @@
 ---
-- include_tasks: versioncheck.yml
+- name: run optional versionscheck
+  ansible.builtin.include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
+
+- name: create user/groups
+  ansible.builtin.include_tasks: user.yml

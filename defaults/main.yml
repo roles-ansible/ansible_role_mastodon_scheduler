@@ -1,3 +1,9 @@
 ---
+mastodon_scheduler__user: 'mastodon'
+mastodon_scheduler__group: 'mastodon'
+
+mastodon_scheduler__private_repo: false
+mastodon_scheduler__version: 'main'
+
 # should we do a version check? (recomended)
 submodules_versioncheck: false

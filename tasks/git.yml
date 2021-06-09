@@ -1,0 +1,51 @@
+---
+- name: print ssh public key to user
+  ansible.builtin.pause:
+    prompt: |
+      We generated a new ssh key pair for you.
+      Please use the following public key as deployment key
+      to your private git repository with your mastodon schedule script.
+      Private git repositorys are not public available and
+      you need some sort of authorisation method to verify
+      that you are allowed to clone your private repo.
+      Your ssh public key come here...
+
+      {{ _mastodon_scheduler__user.ssh_public_key }}
+
+      Please be aware, that this role do not commit or
+      push any local changes and you have to do this
+      manually by yourself.
+  when: _mastodon_scheduler__user.changed
+
+- name: clone or update private git repository
+  become: true
+  block:
+    - name: try to download/update git repo
+      ansible.builtin.git:
+        repo: "{{ mastodon_scheduler__private_repo }}"
+        dest: "{{ _mastodon_scheduler__user.home }}"
+        version: "{{ mastodon_scheduler__version | default ('main') }}"
+        accept_hostkey: true
+        update: true
+        ssh_opts: "-i {{ _mastodon_scheduler__user.ssh_key_file }}"
+  rescue:
+    - name: wait until you fixed remote git issues
+      pause:
+        prompt: "Please fix the issue with your git repository and try again"
+
+    - name: try to download/update git repo again
+      ansible.builtin.git:
+        repo: "{{ mastodon_scheduler__private_repo }}"
+        dest: "{{ _mastodon_scheduler__user.home }}/mastodon-bot"
+        version: "{{ mastodon_scheduler__version | default ('main') }}"
+        accept_hostkey: true
+        update: true
+        ssh_opts: "-i {{ _mastodon_scheduler__user.ssh_key_file }}"
+
+- name: "change git repo ownwe to {{ mastodon_scheduler__user }}"
+  become: true
+  ansible.builtin.file:
+    path: "{{ _mastodon_scheduler__user.home }}/mastodon-bot"
+    recurse: true
+    owner: "{{ mastodon_scheduler__user }}"
+    group: "{{ mastodon_scheduler__group }}"

@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  role_name: mastodon_scheduler
+  author: do1jlr
+  description: Deploy a systemd timer that will schedule Mastodon Messages for you
+  license: "MIT"
+  min_ansible_version: 2.11
+  github_branch: main
+  platforms:
+    - name: Debian
+      versions: all
+    - name: Ubuntu
+      versions: all
+  galaxy_tags:
+    - schedule
+    - mastodon
+    - python
+dependencies: []
