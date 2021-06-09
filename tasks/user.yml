@@ -17,3 +17,4 @@
     ssh_key_file: '.ssh/id_ed25519'
     ssh_key_type: 'ed25519'
   register: _mastodon_scheduler__user
+  notify: print ssh public key to user

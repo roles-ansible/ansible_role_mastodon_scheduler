@@ -1,21 +1,6 @@
 ---
-- name: print ssh public key to user
-  ansible.builtin.pause:
-    prompt: |
-      We generated a new ssh key pair for you.
-      Please use the following public key as deployment key
-      to your private git repository with your mastodon schedule script.
-      Private git repositorys are not public available and
-      you need some sort of authorisation method to verify
-      that you are allowed to clone your private repo.
-      Your ssh public key come here...
-
-      {{ _mastodon_scheduler__user.ssh_public_key }}
-
-      Please be aware, that this role do not commit or
-      push any local changes and you have to do this
-      manually by yourself.
-  when: _mastodon_scheduler__user.changed
+- name: force running handlers now
+  meta: flush_handlers
 
 - name: clone or update private git repository
   become: true
