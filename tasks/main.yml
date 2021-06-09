@@ -5,3 +5,6 @@
 
 - name: create user/groups
   ansible.builtin.include_tasks: user.yml
+
+- name: check out git repo
+  ansible.builtin.include_tasks: git.yml

@@ -8,7 +8,7 @@
     - name: try to download/update git repo
       ansible.builtin.git:
         repo: "{{ mastodon_scheduler__private_repo }}"
-        dest: "{{ _mastodon_scheduler__user.home }}"
+        dest: "{{ _mastodon_scheduler__user.home }}/mastodon-bot"
         version: "{{ mastodon_scheduler__version | default ('main') }}"
         accept_hostkey: true
         update: true
