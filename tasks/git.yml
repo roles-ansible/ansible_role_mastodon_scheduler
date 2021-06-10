@@ -27,7 +27,7 @@
         update: true
         ssh_opts: "-i {{ _mastodon_scheduler__user.ssh_key_file }}"
 
-- name: "change git repo ownwe to {{ mastodon_scheduler__user }}"
+- name: "change git repo owner to {{ mastodon_scheduler__user }}"
   become: true
   ansible.builtin.file:
     path: "{{ _mastodon_scheduler__user.home }}/mastodon-bot"

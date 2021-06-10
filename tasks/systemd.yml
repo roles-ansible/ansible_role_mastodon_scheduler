@@ -1,1 +1,34 @@
 ---
+- name: create systemd service file
+  become: true
+  ansible.builtin.template:
+    src: 'templates/mastodon-schedule.service.j2'
+    dest: '/etc/systemd/system/mastodon-schedule.service'
+    mode: '0644'
+    owner: "{{ mastodon_scheduler__user }}"
+    group: "{{ mastodon_scheduler__group }}"
+
+- name: enable systemd service
+  become: true
+  ansible.builtin.systemd:
+    name: 'mastodon-schedule.service'
+    enabled: true
+    daemon_reload: true
+
+- name: create systemd timer file
+  become: true
+  ansible.builtin.template:
+    src: 'templates/mastodon-schedule.timer.j2'
+    dest: '/etc/systemd/system/mastodon-schedule.timer'
+    mode: '0644'
+    owner: "{{ mastodon_scheduler__user }}"
+    group: "{{ mastodon_scheduler__group }}"
+
+
+- name: Enable and start systemd timer
+  become: true
+  ansible.builtin.systemd:
+    name: 'mastodon-schedule.timer'
+    enabled: true
+    state: started
+    daemon_reload: true

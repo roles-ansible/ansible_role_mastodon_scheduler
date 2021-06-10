@@ -6,6 +6,8 @@ mastodon_scheduler__private_repo: false
 mastodon_scheduler__version: 'main'
 mastodon_scheduler__exec: 'schedule.py'
 mastodon_scheduler__pip_packages: ['Mastodon.py']
+mastodon_scheduler__time: 'Thu *-*-* 23:42:23'
+
 
 # should we do a version check? (recomended)
 submodules_versioncheck: false

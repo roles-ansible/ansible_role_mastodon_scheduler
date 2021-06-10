@@ -1,0 +1,10 @@
+[Unit]
+Description=Mastodon Toot Schedule Timer
+
+[Timer]
+OnCalendar={{ mastodon_scheduler__time }}
+RandomizedDelaySec=300s
+Persistent=yes
+
+[Install]
+WantedBy=network.target
