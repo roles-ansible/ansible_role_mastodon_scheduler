@@ -1,0 +1,13 @@
+---
+- name: install virtualenv
+  become: true
+  ansible.builtin.pip:
+    name: 'virtualenv'
+    state: present
+
+- name: install pip requirements
+  become: true
+  ansible.builtin.pip:
+    name: "{{ mastodon_scheduler__pip_packages }}"
+    state: present
+    virtualenv: "{{ _mastodon_scheduler__user.home }}/mastodon-venv"

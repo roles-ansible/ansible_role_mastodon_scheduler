@@ -1,0 +1,14 @@
+[Unit]
+Description=Mastodon Toot Schedule Service
+
+[Service]
+User={{ mastodon_scheduler__user }}
+Group={{ mastodon_scheduler__group }}
+WorkingDirectory={{ _mastodon_scheduler__user.home }}/mastodon-bot
+VIRTUAL_ENV={{ _mastodon_scheduler__user.home }}/mastodon-venv
+Environment=PATH=$VIRTUAL_ENV/bin:$PATH
+Type=oneshot
+ExecStart={{ _mastodon_scheduler__user.home }}/mastodon-venv/bin/python3 {{ _mastodon_scheduler__user.home }}/mastodon-bot/{{ mastodon_scheduler__exec }}
+
+[Install]
+WantedBy=network.target

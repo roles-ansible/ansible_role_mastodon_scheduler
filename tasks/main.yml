@@ -6,5 +6,11 @@
 - name: create user/groups
   ansible.builtin.include_tasks: user.yml
 
+- name: install requirements
+  ansible.builtin.include_tasks: requirements.yml
+
 - name: check out git repo
   ansible.builtin.include_tasks: git.yml
+
+- name: Setup systemd timer
+  ansible.builtin.include_tasks: systemd.yml
