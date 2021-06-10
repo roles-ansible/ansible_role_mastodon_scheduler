@@ -13,6 +13,7 @@
         accept_hostkey: true
         update: true
         ssh_opts: "-i {{ _mastodon_scheduler__user.ssh_key_file }}"
+      register: gitupdated
   rescue:
     - name: wait until you fixed remote git issues
       pause:
@@ -26,6 +27,7 @@
         accept_hostkey: true
         update: true
         ssh_opts: "-i {{ _mastodon_scheduler__user.ssh_key_file }}"
+      register: gitupdated
 
 - name: "change git repo owner to {{ mastodon_scheduler__user }}"
   become: true
@@ -34,3 +36,4 @@
     recurse: true
     owner: "{{ mastodon_scheduler__user }}"
     group: "{{ mastodon_scheduler__group }}"
+  changed_when: gitupdated.changed | default(false)
